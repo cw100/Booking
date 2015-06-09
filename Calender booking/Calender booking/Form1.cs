@@ -38,13 +38,15 @@ namespace Calender_booking
             panels.Add(panel15);
 
             dateTimePicker2.ShowUpDown = true;
-            dateTimePicker2.CustomFormat = "HH:mm";
+            dateTimePicker2.CustomFormat = "HH:00";
             dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             dateTimePicker3.ShowUpDown = true;
-            dateTimePicker3.CustomFormat = "HH:mm";
+            dateTimePicker3.CustomFormat = "HH:00";
             dateTimePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             
         }
+
+        List<Bookings> bookings = new List<Bookings>();
         public void LoadDates()
         {
             listBox1.Items.Clear();
@@ -52,7 +54,7 @@ namespace Calender_booking
             {
                 panel.BackColor = Color.Green;
             }
-            List<Bookings> bookings = new List<Bookings>();
+             bookings = new List<Bookings>();
             SqlDataReader myReader = null;
             SqlCommand cmd =
                 new SqlCommand("select * from [dbo].[Table] where StartDate < @value and StartDate >= @value2", conn);
@@ -84,7 +86,7 @@ namespace Calender_booking
             foreach(Bookings booking in bookings)
             {
                 int start = booking.StartDate.Hour - 7;
-                while (start < booking.EndDate.Hour - 7 && 0 <= start && start < panels.Count)
+                while (start <= booking.EndDate.Hour - 7 && 0 <= start && start < panels.Count)
                 {
                     panels[start].BackColor = Color.Red;
                     start++;
@@ -96,43 +98,17 @@ namespace Calender_booking
         
         public void RemoveBooking()
         {
-            SqlCommand cmd =
-                new SqlCommand("DELETE from [dbo].[Table] where StartDate = @value", conn);
-            
-            cmd.Parameters.AddWithValue("@value", listBox1.SelectedItem);
-            try
+            if (listBox1.SelectedIndex != -1)
             {
-                conn.Open();
-                cmd.ExecuteNonQuery();
-                
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                conn.Close();
-            }
-           
+                SqlCommand cmd =
+                    new SqlCommand("DELETE from [dbo].[Table] where StartDate = @value", conn);
 
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-                DateTime startDate = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, dateTimePicker1.Value.Day, dateTimePicker2.Value.Hour, dateTimePicker2.Value.Minute, 0);
-                DateTime endDate = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, dateTimePicker1.Value.Day, dateTimePicker3.Value.Hour, dateTimePicker3.Value.Minute, 0);
-            
-                
-                SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[Table](StartDate,EndDate) VALUES (@value,@value2)", conn);
-
-                cmd.Parameters.AddWithValue("@value", startDate);
-
-                cmd.Parameters.AddWithValue("@value2", endDate);
+                cmd.Parameters.AddWithValue("@value", listBox1.SelectedItem);
                 try
                 {
                     conn.Open();
                     cmd.ExecuteNonQuery();
+
                 }
                 catch (SqlException ex)
                 {
@@ -142,11 +118,49 @@ namespace Calender_booking
                 {
                     conn.Close();
                 }
-                LoadDates();
+
+            }
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
             
-            
-            
-           
+                DateTime startDate = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, dateTimePicker1.Value.Day, dateTimePicker2.Value.Hour, dateTimePicker2.Value.Minute, 0);
+                DateTime endDate = new DateTime(dateTimePicker1.Value.Year, dateTimePicker1.Value.Month, dateTimePicker1.Value.Day, dateTimePicker3.Value.Hour+2, dateTimePicker3.Value.Minute, 0);
+                bool valid = true;
+            foreach(Bookings booking in bookings)
+            {
+                if (startDate >= endDate || booking.StartDate <= startDate && startDate <= booking.EndDate || booking.StartDate <= endDate && endDate <= booking.EndDate || booking.EndDate <= endDate && startDate <= booking.StartDate)
+            {
+                    valid = false;
+            }
+                
+            }
+            if(valid)
+            { 
+            SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[Table](StartDate,EndDate) VALUES (@value,@value2)", conn);
+
+            cmd.Parameters.AddWithValue("@value", startDate);
+
+            cmd.Parameters.AddWithValue("@value2", endDate);
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+            LoadDates();
+            }
+            else
+            {
+                MessageBox.Show("Invalid Booking");
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
