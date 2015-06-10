@@ -23,3 +23,14 @@ C:\Users\admin\Documents\Booking\Calender booking\Calender booking\obj\Debug\Cal
 C:\Users\admin\Documents\Booking\Calender booking\Calender booking\obj\Debug\Calender_booking.Form1.resources
 C:\Users\admin\Documents\Booking\Calender booking\Calender booking\obj\Debug\Calender_booking.Properties.Resources.resources
 C:\Users\admin\Documents\Booking\Calender booking\Calender booking\obj\Debug\Calender booking.csproj.GenerateResource.Cache
+C:\Users\Connor\Documents\Booking\Calender booking\Calender booking\bin\Debug\Calender booking.exe.config
+C:\Users\Connor\Documents\Booking\Calender booking\Calender booking\obj\Debug\Calender booking.exe
+C:\Users\Connor\Documents\Booking\Calender booking\Calender booking\obj\Debug\Calender booking.pdb
+C:\Users\Connor\Documents\Booking\Calender booking\Calender booking\bin\Debug\Bookings.mdf
+C:\Users\Connor\Documents\Booking\Calender booking\Calender booking\bin\Debug\Bookings_log.ldf
+C:\Users\Connor\Documents\Booking\Calender booking\Calender booking\bin\Debug\Calender booking.exe
+C:\Users\Connor\Documents\Booking\Calender booking\Calender booking\bin\Debug\Calender booking.pdb
+C:\Users\Connor\Documents\Booking\Calender booking\Calender booking\obj\Debug\Calender booking.csprojResolveAssemblyReference.cache
+C:\Users\Connor\Documents\Booking\Calender booking\Calender booking\obj\Debug\Calender_booking.Form1.resources
+C:\Users\Connor\Documents\Booking\Calender booking\Calender booking\obj\Debug\Calender_booking.Properties.Resources.resources
+C:\Users\Connor\Documents\Booking\Calender booking\Calender booking\obj\Debug\Calender booking.csproj.GenerateResource.Cache
